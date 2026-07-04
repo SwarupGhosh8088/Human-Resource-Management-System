@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Base URL of your Express backend. Set VITE_API_URL in a .env file to override
 // (see .env.example). Defaults to the local dev server from index.js.
-const baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const baseURL =  "https://human-resource-management-system-2-h0j0.onrender.com/api";
 
 const client = axios.create({
   baseURL,

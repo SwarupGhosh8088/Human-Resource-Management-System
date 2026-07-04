@@ -13,7 +13,7 @@ import {
   User,
 } from "lucide-react";
 
-const API = "http://localhost:3000/api/auth/register";
+const API = "https://human-resource-management-system-2-h0j0.onrender.com/api/auth/register";
 
 const emptyForm = {
   employeeId: "",
