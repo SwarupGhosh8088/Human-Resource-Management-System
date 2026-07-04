@@ -2,6 +2,8 @@ import User from "../modules/user.module.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { sendOtpEmail } from "../utils/otpVerification.js";
+
 dotenv.config();
 
 
@@ -72,6 +74,13 @@ export const register = async (req, res) => {
       dateOfJoining,
     });
 
+    const  otp = Math.floor(100000 + Math.random() * 900000).toString();
+    user.otp = otp;
+    user.otpExpires = Date.now() + 10 * 60 * 1000; // OTP valid for 10 minutes
+
+    await user.save();
+    await sendOtpEmail(user.email, otp);
+
     res.status(201).json({
       success: true,
       message: "User Registered Successfully",
@@ -127,6 +136,12 @@ export const login = async (req, res) => {
         expiresIn: "7d",
       }
     );
+
+    user.isLoggedIn = true;
+    user.otp = null;
+    user.otpExpires = null;
+    await user.save();
+  
 
     res.status(200).json({
       success: true,
